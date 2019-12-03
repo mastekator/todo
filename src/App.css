@@ -1,0 +1,23 @@
+.task-card{
+  padding: 10px 0;
+  border-top: 1px solid #e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-card:not(:first-of-type){
+  border-top: none;
+}
+
+.task-card__avatar{
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  max-width: 25px;
+  max-height: 25px;
+}
+
+.task-card__checkbox{
+  margin-right: 10px;
+}
