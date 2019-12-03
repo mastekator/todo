@@ -20,29 +20,65 @@ class App extends Component {
                 src: 'https://cdn.dribbble.com/users/162405/avatars/small/e7eee87a3ff47698761874fe291779ff.jpg?1488991848'
             },
         ],
-        pageTitle: 'Задачи'
+        pageTitle: 'Задачи',
+        showNewTask: false,
+        newTaskName: ''
+    };
+
+    showTaskHandler = () => {
+        this.setState({
+            showNewTask: !this.state.showNewTask
+        })
     };
 
     addTaskHandler = () => {
-        console.log('asd')
+        let tasks = [...this.state.tasks];
+        tasks.push({
+            name: this.state.newTaskName,
+            src: 'https://cdn.dribbble.com/users/162405/avatars/small/e7eee87a3ff47698761874fe291779ff.jpg?1488991848'
+        });
+        console.log(tasks)
+    };
+
+    inputHandler = (event) => {
+        this.setState({
+            newTaskName: event.target.value
+        });
     };
 
     render() {
-        const tasks = this.state.tasks;
+
+        let newTask = null;
+        if (this.state.showNewTask) {
+            newTask = <div>
+                <input onChange={this.inputHandler} className={'form-control mt-2'} type="text"/>
+                <div className="btn-group mt-3">
+                    <button onClick={this.addTaskHandler} className={'btn btn-light text-primary'}>Добавить</button>
+                    <button onClick={this.showTaskHandler} className={'btn btn-secondary'}>Отмена</button>
+                </div>
+            </div>
+        }
+
         return (
             <div style={{textAlign: 'center'}} className="App">
                 <div className="container pt-5">
                     <div className="row">
                         <div className="col-lg-6 offset-lg-3 col-12 offset-0">
                             <h1 className={'mb-4'}>{this.state.pageTitle}</h1>
-                            <Task name={tasks[0].name} src={tasks[0].src}/>
-                            <Task name={tasks[1].name} src={tasks[1].src}/>
-                            <Task name={tasks[2].name} src={tasks[2].src}/>
+
+                            {this.state.tasks.map((task, index) => {
+                                    return (
+                                        <Task key={index} name={task.name} src={task.src}/>
+                                    )
+                                }
+                            )}
+
                         </div>
                         <div className="col-lg-6 offset-lg-3 col-12 offset-0 text-left">
-                            <button onClick={this.addTaskHandler} className={'btn btn-white text-primary mt-1'}>+
+                            <button onClick={this.showTaskHandler} className={'btn btn-white text-primary mt-1'}>+
                                 Добавить задачу
                             </button>
+                            {newTask}
                         </div>
                     </div>
                 </div>
